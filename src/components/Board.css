@@ -1,0 +1,47 @@
+:root {
+  --blue: #1e90ff;
+  --lightgrey: #d3d3d3;
+  --primary-color: yellow;
+}
+
+.container {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.title {
+  font-size: 22px;
+  padding-bottom: 30px;
+  font-weight: bold;
+}
+
+.game-board {
+  display: grid;
+  grid-template-columns: repeat(3, 100px);
+  padding: 8px;
+  background-color: var(--lightgrey);
+  gap: 8px;
+  width: min-content;
+  height: min-content;
+}
+
+.restart-game-button {
+  margin-top: 20px;
+  border: 1px solid;
+  outline: none;
+  color: black;
+  background-color: var(--primary-color);
+  width: 227px;
+  height: 36px;
+  font-size: 14px;
+  font-weight: 600;
+  border-radius: 10px;
+  box-shadow: 0 6px 16px 0 rgba(65, 82, 125, 0.16);
+}
+
+.restart-game-button:hover {
+  box-shadow: 0 12px 16px 0 rgba(0, 0, 0, 0.24), 0 17px 50px 0 rgba(0, 0, 0, 0.19);
+}

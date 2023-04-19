@@ -1,0 +1,27 @@
+.tile {
+  width: 100px;
+  height: 100px;
+  color: black;
+  background-color: whitesmoke;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 1px solid var(--primary-color);
+  border-radius: 15px;
+}
+
+.x {
+  color: rgb(255, 70, 37);
+}
+
+.o {
+  color: rgb(44, 135, 255);
+}
+
+.tile:active {
+  transform: scale(0.9);
+}
+
+.tile:hover {
+  border-width: 5px;
+}
