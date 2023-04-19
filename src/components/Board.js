@@ -14,6 +14,9 @@ const winningBlocks = [
   [0, 4, 8],
 ]
 
+const PLAYER_X = 'X'
+const PLAYER_O = 'O'
+
 const Board = () => {
   const [gameBoardData, setGameBoardData] = useState([
     null,
@@ -26,25 +29,27 @@ const Board = () => {
     null,
     null,
   ])
-  const [player, setPlayer] = useState('X')
-  const [result, setResult] = useState({ winner: 'none', state: 'none' })
-  const [winCountX, setWinCountX] = useState([])
-  const [winCountO, setWinCountY] = useState([])
+  const [player, setPlayer] = useState(PLAYER_X)
+  const [winnersArray, setWinnersArray] = useState([])
+  const [winner, setWinner] = useState(null)
 
-  const switchPlayer = () => (player === 'X' ? setPlayer('O') : setPlayer('X'))
+  const switchPlayer = () => {
+    setPlayer(prevPlayer => (prevPlayer === PLAYER_X ? PLAYER_O : PLAYER_X))
+  }
 
-  const checkForWinner = () => {
-    for (let i = 0; i < winningBlocks.length; i++) {
-      const [d, e, f] = winningBlocks[i]
+  const getWinner = () => {
+    let currentWinner = null
+    winningBlocks.forEach(block => {
+      const [d, e, f] = block
       if (
         gameBoardData[d] &&
         gameBoardData[d] === gameBoardData[e] &&
         gameBoardData[d] === gameBoardData[f]
       ) {
-        return [gameBoardData[d]]
+        currentWinner = gameBoardData[d]
       }
-    }
-    return null
+    })
+    return currentWinner
   }
 
   const updateGameBoard = index => {
@@ -54,23 +59,41 @@ const Board = () => {
       setGameBoardData(newGameBoardData)
       switchPlayer()
     }
-    if (checkForWinner(['X'])) {
-      return winCountX.push('X')
-    } else {
-      return winCountO.push('O')
-    }
   }
-
-  console.log(winCountX, '---x')
-  console.log(winCountO, '---o')
 
   const restartGame = () => {
     setGameBoardData([null, null, null, null, null, null, null, null, null])
+    setWinner(null)
   }
+
+  useEffect(() => {
+    const currentWinner = getWinner()
+    if (currentWinner !== null) {
+      if (currentWinner === PLAYER_X) {
+        setWinnersArray([...winnersArray, PLAYER_X])
+        setWinner(PLAYER_X)
+      } else {
+        setWinnersArray([...winnersArray, PLAYER_O])
+        setWinner(PLAYER_O)
+      }
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [gameBoardData])
+
+  const countPlayerXWins = winnersArray.filter(i => i === PLAYER_X).length
+  const countPlayerOWins = winnersArray.filter(i => i === PLAYER_O).length
+
+  const isBoardDirty = gameBoardData.some(board => board === PLAYER_O || board === PLAYER_X)
 
   return (
     <div className='container'>
       <div className='title'> Tic-Tac-Toe Board</div>
+      <div className='x-win-count'>
+        Player X's win: <strong>{countPlayerXWins}</strong>{' '}
+      </div>
+      <div className='o-win-count'>
+        Player O's win: <strong>{countPlayerOWins}</strong>
+      </div>
       <div className='game-board'>
         {gameBoardData.map((tile, index) => (
           <Tile
@@ -79,18 +102,11 @@ const Board = () => {
             tile={tile}
             player={player}
             updateGameBoard={updateGameBoard}
-            gameBoardData={gameBoardData}
           />
         ))}
       </div>
-      {checkForWinner() ? (
-        <>
-          <h1>Winner is: {checkForWinner()} </h1>
-          <ActionButton onClick={restartGame} value='Restart Game' />
-        </>
-      ) : (
-        <ActionButton onClick={restartGame} value='Try Again' />
-      )}
+      {winner && <h1>Winner is: {winner} </h1>}
+      {isBoardDirty && <ActionButton onClick={restartGame} value='Restart Game' />}
     </div>
   )
 }

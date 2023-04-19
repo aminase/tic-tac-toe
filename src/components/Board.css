@@ -2,6 +2,7 @@
   --blue: #1e90ff;
   --lightgrey: #d3d3d3;
   --primary-color: yellow;
+  --forest-green: #228b22;
 }
 
 .container {
@@ -13,13 +14,24 @@
 }
 
 .title {
-  font-size: 22px;
+  font-size: 25px;
   padding-bottom: 30px;
   font-weight: bold;
 }
-
+.x-win-count {
+  font-weight: bold;
+  border: 2px solid var(--blue);
+  padding: 10px;
+  margin-bottom: 10px;
+}
+.o-win-count {
+  font-weight: bold;
+  border: 2px solid var(--forest-green);
+  padding: 10px;
+}
 .game-board {
   display: grid;
+  margin-top: 25px;
   grid-template-columns: repeat(3, 100px);
   padding: 8px;
   background-color: var(--lightgrey);
