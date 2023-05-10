@@ -1,2 +1,2 @@
-*.css linguist-detectable=false
-*.js linguist-detectable=true
+public/* linguist-generated
+scot-ui/public/* linguist-generated
