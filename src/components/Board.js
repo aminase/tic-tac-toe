@@ -85,6 +85,20 @@ const Board = () => {
 
   const isBoardDirty = gameBoardData.some(board => board === PLAYER_O || board === PLAYER_X)
 
+  const arr = [2, 4, 6]
+
+  const arrayForEach = arr.forEach((ar, i) => {
+    arr[i] = ar + 3
+  })
+
+  const arrayOne = [
+    [1, 2],
+    [3, 4],
+    [5, 6],
+  ]
+
+  const arrayMap = arr.map(ar => ar + 3).filter(i => i < 12)
+
   return (
     <div className='container'>
       <div className='title'> Tic-Tac-Toe Board</div>
